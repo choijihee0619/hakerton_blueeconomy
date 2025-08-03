@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="해양 환경 보호를 위한 시민 참여형 챌린지 앱" />
+    <meta name="keywords" content="해양환경, 환경보호, 챌린지, 블루이코노미" />
+    <meta name="author" content="Blue Economy Team" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://blue-economy-challenge.vercel.app/" />
+    <meta property="og:title" content="블루이코노미 챌린지" />
+    <meta property="og:description" content="해양 환경 보호를 위한 시민 참여형 챌린지 앱" />
+    <meta property="og:image" content="/og-image.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://blue-economy-challenge.vercel.app/" />
+    <meta property="twitter:title" content="블루이코노미 챌린지" />
+    <meta property="twitter:description" content="해양 환경 보호를 위한 시민 참여형 챌린지 앱" />
+    <meta property="twitter:image" content="/og-image.png" />
+
+    <!-- PWA 설정 -->
+    <meta name="theme-color" content="#030213" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="블루이코노미" />
+    
+    <!-- 모바일 최적화 -->
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    
+    <title>블루이코노미 챌린지 - 해양 환경 보호</title>
+    
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <style>
+      /* 로딩 스피너 스타일 */
+      .loading-spinner {
+        border: 4px solid #f3f3f4;
+        border-top: 4px solid #030213;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      /* 초기 로딩 화면 */
+      #loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #ffffff;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: opacity 0.3s ease-out;
+      }
+      
+      #loading-screen.dark {
+        background: #030213;
+        color: #ffffff;
+      }
+      
+      #loading-screen.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+      
+      .loading-logo {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+      
+      .loading-text {
+        font-size: 1.1rem;
+        color: #666;
+        margin-top: 1rem;
+      }
+      
+      .dark .loading-text {
+        color: #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 초기 로딩 화면 -->
+    <div id="loading-screen">
+      <div class="loading-logo">🌊</div>
+      <div class="loading-spinner"></div>
+      <div class="loading-text">블루이코노미 로딩 중...</div>
+    </div>
+    
+    <!-- React 앱 마운트 포인트 -->
+    <div id="root"></div>
+    
+    <!-- 자바스크립트가 비활성화된 경우 -->
+    <noscript>
+      <div style="text-align: center; padding: 50px; font-family: Arial, sans-serif;">
+        <h1>🌊 블루이코노미 챌린지</h1>
+        <p>이 앱을 사용하려면 자바스크립트를 활성화해주세요.</p>
+        <p>JavaScript를 활성화하고 페이지를 새로고침하세요.</p>
+      </div>
+    </noscript>
+    
+    <script type="module" src="/main.jsx"></script>
+    
+    <script>
+      // 다크모드 초기 설정
+      (function() {
+        const theme = localStorage.getItem('theme') || 
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+          document.getElementById('loading-screen').classList.add('dark');
+        }
+      })();
+      
+      // 로딩 화면 제거
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          const loadingScreen = document.getElementById('loading-screen');
+          if (loadingScreen) {
+            loadingScreen.classList.add('hidden');
+            setTimeout(function() {
+              loadingScreen.remove();
+            }, 300);
+          }
+        }, 1000);
+      });
+    </script>
+  </body>
+</html>
